@@ -2,7 +2,7 @@ import admin, {firestore} from 'firebase-admin'
 import { serviceAccountCredentials } from '../serviceAccountKey'
 const serviceAccount = serviceAccountCredentials as admin.ServiceAccount
 
-
+//Membuat struktru data yang akan dimasukkan kedalam body Rest API
 export type Antrian ={
     antrian : number
     nama : string
@@ -29,6 +29,7 @@ export class FirebaseClient {
         this.antrianRef= antrianRef
     }
 
+    //Fungsi untuk melakukan pembuatan data antrian
     async addData(antri : Antrian){
         const ant= antri as firestore.DocumentData
         try {
@@ -39,6 +40,7 @@ export class FirebaseClient {
         return
     }
 
+    //Fungsi untuk mendapatkan semua data antrian
     async getData(){
         let snapshot
         try {
@@ -49,6 +51,7 @@ export class FirebaseClient {
         return snapshot.docs.map(doc=>doc.data())
     }
 
+    //Fungsi untuk mendapatkan data antrian berdasarkan nomor urut antrian
     async getDataByAntrian(antrian:number){
         let snapshot
         try{
@@ -58,6 +61,8 @@ export class FirebaseClient {
         }
         return snapshot.docs.map(doc => doc.data())
     }
+
+    //Fungsi untuk melakukan update terhadap data antrian
     async updateData(id: string, update: Object) {
         let snapshot
         try {
@@ -71,6 +76,7 @@ export class FirebaseClient {
         return snapshot.data()
     }
 
+    //Fungsi untuk melakukan penghapusan semua data antrian
     async deleteData() {
         let snapshot
         let ant = admin.firestore().batch()
@@ -85,6 +91,7 @@ export class FirebaseClient {
         return ant.commit()
     }
 
+    //Fungsi untuk melakukan penghapusan data antrian berdasarkan id data
     async deleteDataById(id:string) {
         try {
           await antrianRef.doc(id).delete()

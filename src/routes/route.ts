@@ -4,6 +4,7 @@ const firebaseClient = new FirebaseClient()
 
 const router = Router()
 
+//Route untuk membuat data antrian
 router.post('/antrian',async (req,res,next)=>{
     const antri =req.body
     try {
@@ -11,6 +12,8 @@ router.post('/antrian',async (req,res,next)=>{
     } catch (error) {
         throw error
     }
+
+    //Respon yang akan ditampilkan setelah data berhasil dibuat
     res.json({
         Urutan : antri.antrian,
         Nama : antri.nama,
@@ -19,6 +22,7 @@ router.post('/antrian',async (req,res,next)=>{
     })
 })
 
+//Route untuk mendapatkan semua data antrian
 router.get('/antrian',async (req,res,next)=>{
     let antrian
     try{
@@ -29,6 +33,7 @@ router.get('/antrian',async (req,res,next)=>{
     res.json(antrian)
 })
 
+//Route untuk mendapatkan data berdasarkan nomor urut antrian
 router.get('/antrian/:antrian',async (req,res,next)=>{
     const antrian=Number(req.params.antrian)
     let antrians
@@ -40,6 +45,7 @@ router.get('/antrian/:antrian',async (req,res,next)=>{
     res.json(antrians)
 })
 
+//Route untuk memperbarui data antrian berdasarkan id data
 router.put('/antrian/:id', async (req, res, next) => {
     const id=req.params.id
     const update=req.body
@@ -52,6 +58,7 @@ router.put('/antrian/:id', async (req, res, next) => {
     res.json(antrian)
 });
 
+//Route untuk menghapus semua data antrian
 router.delete('/antrian', async (req, res, next) => {
     let cussers
     try {
@@ -62,6 +69,8 @@ router.delete('/antrian', async (req, res, next) => {
     res.json({ message: 'Data telah dihapus'})
 })
 
+
+//Route untuk menghapus data antrian berdasarkan id
 router.delete('/antrian/:id', async (req, res, next) => {
     const id=req.params.id
     let antrian
